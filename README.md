@@ -5,7 +5,7 @@
 
 
 
-![vim_cool](vim-cool/screenshots/vim_cool.png)
+![vim_cool](screenshots/vim_cool.png)
 
 
 插件没有添加搜索，可自行添加。
