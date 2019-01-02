@@ -4,6 +4,10 @@
 #### 2018.12.30
 
 
+
+![vim_cool](vim-cool/screenshots/vim_cool.png)
+
+
 插件没有添加搜索，可自行添加。
 ### 帮助
 
