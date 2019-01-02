@@ -10,8 +10,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 通用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader = ","      " 定义<leader>键
-colorscheme molokai      " 设置主题
+let mapleader = "."      " 定义<leader>键
+colorscheme gruvbox   " 设置主题
 set background=dark      " 设置背景颜色
 set nocompatible         " 设置不兼容原始vi模式
 filetype on              " 设置开启文件类型侦测
@@ -58,6 +58,8 @@ set nofoldenable         " 禁用折叠代码
 set autowrite            " 自动保存
 set autochdir            " 自动切换目录
 set autoread             " 自动读取
+set textwidth=79         " 文本长度
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码补全
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -138,75 +140,78 @@ call plug#begin('~/.vim/plugged')
 "+----------------------------------+
 "+             美化
 "+----------------------------------+
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'chxuan/vimplus-startify'
-Plug 'Yggdroot/indentLine'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'edkolev/tmuxline.vim'
+Plug 'chxuan/vimplus-startify'          " 开始界面导航
+Plug 'Yggdroot/indentLine'              " 显示缩进线
+Plug 'kien/rainbow_parentheses.vim'     " 括号高亮
+Plug 'edkolev/tmuxline.vim'             " tmux状态栏
+Plug 'gko/vim-coloresque'               " CSS颜色高亮
+Plug 'airblade/vim-gitgutter'           " 显示git状态
+Plug 'bronson/vim-trailing-whitespace'  " 多余空白，显示
+Plug 'vim-airline/vim-airline'          " 状态栏美化
+Plug 'vim-airline/vim-airline-themes'   " 状态栏主题
+Plug 'morhetz/gruvbox'                  " 主题
 "+----------------------------------+
 "+            通用
 "+----------------------------------+
-Plug 'scrooloose/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'jiangmiao/auto-pairs'
-Plug 'ryanoasis/vim-devicons'
-Plug 'majutsushi/tagbar'
-Plug 'SirVer/ultisnips'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'mustache/vim-mustache-handlebars'
+Plug 'scrooloose/nerdtree'              " 文件浏览管理
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " 文件高亮
+Plug 'Xuyuanp/nerdtree-git-plugin'      " 文件Git插件
+Plug 'jiangmiao/auto-pairs'             " 自动匹配符号
+Plug 'ryanoasis/vim-devicons'           " 文件图标
+Plug 'majutsushi/tagbar'                " 函数大纲浏览
+Plug 'SirVer/ultisnips'                 " 代码片段
+Plug 'skywind3000/asyncrun.vim'         " 异步编译运行
+Plug 'tpope/vim-fugitive'               " Git
 "+----------------------------------+
 "+            补全
 "+----------------------------------+
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'           " YCM 语义自动补全
 "+----------------------------------+
 "+            检查
 "+----------------------------------+
-Plug 'vim-syntastic/syntastic'
+Plug 'w0rp/ale' " ale异步检查
+"+----------------------------------+
+"+            搜索
+"+----------------------------------+
+
 "+----------------------------------+
 "+            编辑
 "+----------------------------------+
-Plug 'plasticboy/vim-markdow'
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
-Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'         " 注释
 
 "+----------------------------------+
 "+            python
 "+----------------------------------+
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
+Plug 'yodiaditya/vim-pydjango'
+Plug 'hdima/python-syntax'
+Plug 'plytophogy/vim-virtualenv'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'davidhalter/jedi-vim'
 "+----------------------------------+
-"+           C++/c
+"+             GO
 "+----------------------------------+
-Plug 'chxuan/cpp-mode'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'NLKNguyen/c-syntax.vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 "+----------------------------------+
-"+           js/ts
+"+             php
 "+----------------------------------+
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-
-"+----------------------------------+
-"+           Font-end
-"+----------------------------------+
-Plug 'ap/vim-css-color'
-Plug 'mxw/vim-jsx'
-Plug 'posva/vim-vue'
-"+----------------------------------+
-"+           php
-"+----------------------------------+
-Plug 'StanAngeloff/php.vim', {'for': 'php'}
-Plug 'tobyS/vmustache'
-Plug 'stephpy/vim-php-cs-fixer'
-Plug 'nishigori/vim-php-dictionary'
-Plug 'nederdirk/vim-phpfmt'
-Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
-Plug 'chr4/nginx.vim'
-
+Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
 call plug#end()            
 
+" 关闭窗口
+nnoremap <leader>q :q<cr>
+nnoremap <leader><leader>e :q！<cr>
+
+" 保存
+nnoremap <leader>w :w<cr>
+nnoremap <leader><leader>e :w！<cr>
+
+" 分屏
+nnoremap <leader><leader>v :vs<cr>
+nnoremap <leader><leader>s :sp<cr>
+
+" 更新vimrc
+nnoremap <leader>e :edit $MYVIMRC<cr>
 
 " 打开当前光标所在单词的vim帮助文档
 nnoremap <leader>H :execute ":help " . expand("<cword>")<cr>
@@ -216,52 +221,127 @@ nnoremap <leader><leader>i :PlugInstall<cr>
 nnoremap <leader><leader>u :PlugUpdate<cr>
 nnoremap <leader><leader>c :PlugClean<cr>
 
-" 分屏窗口移动
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
-
 " 打开文件自动定位到最后编辑的位置
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
-" airline
-let g:airline_theme="onedark"
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
 
-" cpp-mode
-let g:cpp_named_requirements_highlight = 1
-nnoremap <leader>y :CopyCode<cr>
-nnoremap <leader>p :PasteCode<cr>
-nnoremap <leader>U :GoToFunImpl<cr>
-nnoremap <silent> <leader>a :Switch<cr>
-nnoremap <leader><leader>fp :FormatFunParam<cr>
-nnoremap <leader><leader>if :FormatIf<cr>
+"davidhalter/jedi-vim
+let g:jedi#force_py_version = 3
+let g:jedi#show_call_signatures = "1"
+let g:jedi#goto_command = "<leader>a"
+let g:jedi#goto_assignments_command = "<leader>s"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "q"
+let g:jedi#usages_command = "<leader>w"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>e"
+
+" ale
+let g:ale_set_highlights = 1
+"**自定义error和warning图标
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚡'
+"**在vim自带的状态栏中整合ale
+let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+"***显示Linter名称,出错或警告等相关信息
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_lint_on_enter = 0 " 打开文件时不进行检查
+let g:ale_java_javac_options = '-encoding UTF-8  -J-Duser.language=en'
+let g:ale_linters = {
+\   'c++': ['clang'],
+\   'c': ['clang'],
+\   'python': ['pylint'],
+\   'css': ['csslint', 'stylelint'],
+\   'html': ['HTMLHint'],
+\   'javascript': ['jshint', 'eslint'],
+\   'go': ['golint', 'go vet', 'go build'],
+\}
+"**rust
+let g:ale_linters = {'rust': ['rustc']}
+
+
+
+" vim-virtualenv
+nnoremap <leader>z :VirtualEnvDeactivate<cr> " 停用当前的virtualenv
+nnoremap <leader>x :VirtualEnvList<cr> " 列出所有virtualenvs
+nnoremap <Leader>v :VirtualEnvActivate <Tab> " 激活
+
+
+" python-syntax
+let python_highlight_all = 1
+
+
+
+" Vim-Go
+nnoremap <leader>g :GoFmt<cr>
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+let g:go_list_type = "quickfix"
+let g:go_test_timeout = '10s'
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+let g:go_addtags_transform = "camelcase"
+let g:go_fmt_command = "goimports"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_build_constraints = 1
+au BufRead,BufNewFile *.gohtml set filetype=gohtmltmpl
 
 
 " nerdtree
-nnoremap <silent> <leader>n :NERDTreeToggle<cr>
-inoremap <silent> <leader>n <esc> :NERDTreeToggle<cr>
+map <F2> :NERDTreeToggle<CR>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
 let g:NERDTreeHighlightFolders = 1         
 let g:NERDTreeHighlightFoldersFullName = 1 
+let NERDTreeAutoCenter=1
+let NERDTreeShowBookmarks=1
+let NERDTreeChDirMode=1
+let NERDTreeWinSize=35
+let NERDTreeIgnore=['\.pyc','\~$','\.swp']
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") &&b:NERDTree.isTabTree()) | q | endif
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 
 ""vim-devicons
 set guifont=DroidSansMono_Nerd_Font:h11
 
+
 " YCM
+let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+let g:EclimCompletionMethod = 'omnifunc'
 let g:ycm_confirm_extra_conf = 0 
 let g:ycm_error_symbol = '✗'
 let g:ycm_warning_symbol = '✗'
@@ -270,52 +350,15 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1 
 let g:ycm_server_python_interpreter = '/usr/bin/python'
 let g:ycm_python_binary_path = 'python'
+let g:ycm_enable_diagnostic_signs  =  1
+let g:ycm_add_preview_to_completeopt = 0 " 文档预览关闭
+nnoremap <leader>rr :YcmRestartServer<cr>
 nnoremap <leader>u :YcmCompleter GoToDeclaration<cr>
 nnoremap <leader>o :YcmCompleter GoToInclude<cr>
-nnoremap <leader>ff :YcmCompleter FixIt<cr>
-nmap <F5> :YcmDiags<cr>
+nnoremap <leader>b :YcmCompleter FixIt<cr>
+nmap <F3> :YcmDiags<cr>
 
 
-""vim   sysntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
-let g:syntastic_php_phpcs_exec = './bin/phpcs'
-let g:syntastic_php_phpcs_args = '--standard=psr2'
-let g:syntastic_php_phpmd_exec = './bin/phpmd'
-let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
-
-
-" incsearch.vim
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
-" markdown
-let uname = system('uname -s')
-if uname == "Darwin\n"
-    let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"
-else
-    let g:mkdp_path_to_chrome = '/usr/bin/google-chrome-stable %U'
-endif
-nmap <silent> <F7> <Plug>MarkdownPreview
-imap <silent> <F7> <Plug>MarkdownPreview
-nmap <silent> <F8> <Plug>StopMarkdownPreview
-imap <silent> <F8> <Plug>StopMarkdownPreview
-
-
-"" Markdown-vim 
-let g:vim_markdown_json_frontmatter = 1
-let g:vim_markdown_toml_frontmatter = 1
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_auto_extension_ext = 'txt'
-let g:vim_markdown_folding_disabled = 1
-let g:instant_markdown_open_to_the_world = 1
 
 " nerdtree-git-plugin
 let g:NERDTreeIndicatorMapCustom = {
@@ -333,10 +376,9 @@ let g:NERDTreeIndicatorMapCustom = {
 
 
 
-
 " tabular
-nnoremap <leader>l :Tab /\|<cr>
-nnoremap <leader>= :Tab /=<cr>
+nmap <F1> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
 
 
 " gv
@@ -346,56 +388,15 @@ nnoremap <leader>gg :GV?<cr>
 
 
 "nerdcomments
-let g:NERDSpaceDelime=1
+let g:NERDSpaceDelime=1             " 在默认情况下添加注释分隔后的空间
+"let g:NERDCompactSexyComs = 1      " 使用紧凑语法进行美化的多行注释
+"let g:NERDDefaultAlign = 'left'    " 对齐行向注释分隔符向左冲洗而不是跟随代码缩进
+"let g:NERDAltDelims_java = 1       " 设置语言默认使用其备用定界符
+"let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }    " 加入自己的自定义格式或覆盖默认
+"let g:NERDCommentEmptyLines = 1       " 允许注释和反转空行（在注释区域时很有用）
+"let g:NERDTrimTrailingWhitespace = 1  " 在取消注释时启用尾部空格的修剪
+"let g:NERDToggleCheckAllLines = 1     " 启用NERDCommenterToggle检查所有选择的线被注释或不
 
-
-" VIM-PHP-FIXER
-let g:php_cs_fixer_rules = "@PSR2"
-let g:php_cs_fixer_php_path = "php"               " Path to PHP
-let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by de
-
-""Typescript-Vim
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
-
-
-
-"PHP-VIM
-syn match phpParentOnly "[()]" contained containedin=phpParent
-hi phpParentOnly guifg=#f08080 guibg=NONE gui=NONE
-
-""Pythonmode
-let g:pymode_python = 'python3'
-let g:pymode = 1
-let g:pymode_options_max_line_length = 79
-let g:pymode_options_colorcolumn = 1
-let g:pymode_quickfix_minheight = 3
-let g:pymode_quickfix_maxheight = 3
-let g:pymode_indent = 1
-let g:pymode_folding = 0
-let g:pymode_motion = 1
-let g:pymode_doc = 1
-let g:pymode_doc_bind = 'K'
-let g:pymode_virtualenv = 1
-let g:pymode_virtualenv_path = $VIRTUAL_ENV
-let g:pymode_run = 1
-let g:pymode_run_bind = '<leader>m'
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_bind = '<leader>k'
-let g:pymode_breakpoint_cmd = ''
-let g:pymode_lint_checkers = ['pyflakes', 'pep8', 'mccabe']
-let g:pymode_lint_cwindow = 1
-let g:pymode_lint_signs = 1
-let g:pymode_lint_todo_symbol = 'WW'
-let g:pymode_lint_comment_symbol = 'CC'
-let g:pymode_lint_visual_symbol = 'RR'
-let g:pymode_lint_error_symbol = 'EE'
-let g:pymode_lint_info_symbol = 'II'
-let g:pymode_lint_pyflakes_symbol = 'FF'
-let g:pymode_rope_completion = 1
-let g:pymode_rope_complete_on_dot = 1
-let g:pymode_rope_completion_bind = '<C-Space>'
-let g:pymode_syntax_all = 1
 
 ""indentline 
 let g:indentLine_enabled = 1
@@ -411,7 +412,7 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 
-""rainbow_parentheses.vim
+"rainbow_parentheses.vim
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
     \ ['Darkblue',    'SeaGreen3'],
@@ -438,7 +439,60 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 
-""Startify
+""AirLine
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_theme='dark'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_detect_modified=1
+let g:airline_highlighting_cache = 0
+let g:airline#extensions#whitespace#enabled = 0
+
+let g:airline#extensions#ale#enabled = 1
+let airline#extensions#ale#error_symbol = 'E:'
+let airline#extensions#ale#warning_symbol = 'W:'
+let airline#extensions#ale#show_line_numbers = 1
+let airline#extensions#ale#open_lnum_symbol = '(L'
+let airline#extensions#ale#close_lnum_symbol = ')'
+
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+let g:airline_left_sep = '▶'
+let g:airline_left_alt_sep = '❯'
+let g:airline_right_sep = '◀'
+let g:airline_right_alt_sep = '❮'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
+
+let g:airline_mode_map =
+\ {   '__' : '-',
+      \ 'c'  : 'C',
+      \ 'i'  : 'I',
+      \ 'ic' : 'I',
+      \ 'v'  : 'V',
+      \ 'ix' : 'I',
+      \ 'n'  : 'N',
+      \ 'ni' : 'N', 'no' : 'N',  'R'  : 'R', 'Rv' : 'R', 's'  : 'S', 'S'  : 'S'}
+
+let g:airline#extensions#default#section_truncate_width = {
+      \ 'b': 79,
+      \ 'x': 60,
+      \ 'y': 88,
+      \ 'z': 45,
+      \ 'warning': 80,
+      \ 'error': 80,
+      \ }
+
+
+
+"Startify
 let g:startify_custom_header = [
             \ '         VIM-COOL             ',
             \ '     Author: Jack Liu         ',
@@ -452,8 +506,40 @@ let g:startify_custom_footer = [
 let g:startify_skiplist = [
        \ '^/tmp',
        \ ]
-let g:startify_bookmarks = [  ]
+let g:startify_bookmarks = [ 
+           \ '~/code',
+            \ '~/go',
+            \ '~/.vimrc',
+            \ '~/.zshrc',
+          \]
 let g:startify_session_autoload = 1
 let g:startify_files_number = 20
 
+
+""Asyncrun
+let g:asyncrun_open = 6
+let g:asyncrun_bell = 1
+let g:asyncrun_encs='utf-8' 
+let g:asyncrun_status = "stopped" 
+let g:airline_section_error = airline#section#create_right(['%{g:asyncrun_status}'])
+nnoremap <F4> :call asyncrun#quickfix_toggle(6)<cr>
+let $PYTHONUNBUFFERED=1
+nnoremap <F5> :call <SID>compile_and_run()<CR>
+
+function! s:compile_and_run()
+    exec 'w'
+    if &filetype == 'c'
+        exec "AsyncRun! gcc % -o %<; time ./%<"
+    elseif &filetype == 'cpp'
+       exec "AsyncRun! g++ -std=c++11 % -o %<; time ./%<"
+    elseif &filetype == 'java'
+       exec "AsyncRun! javac %; time java %<"
+    elseif &filetype == 'sh'
+       exec "AsyncRun! time bash %"
+    elseif &filetype == 'python'
+       exec "AsyncRun! time python3 %"
+    elseif &filetype == 'go'
+        exec "AsyncRun go build '%:p:h' "
+    endif
+endfunction
 
